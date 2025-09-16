@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.app_journey.R
 import com.example.app_journey.service.RetrofitFactory
@@ -61,8 +62,7 @@ fun Login(navegacao: NavHostController?) {
         Column (
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .padding(start = 16.dp, end = 16.dp),
             verticalArrangement = Arrangement.Center
         ){
             Card (
@@ -74,7 +74,8 @@ fun Login(navegacao: NavHostController?) {
                 Column (
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(15.dp)
+                        .padding(15.dp),
+                    verticalArrangement = Arrangement.Center
                 ){
                     Image(
                         painter = painterResource(R.drawable.logo),
@@ -83,15 +84,22 @@ fun Login(navegacao: NavHostController?) {
                             .fillMaxWidth()
                             .height(100.dp)
                     )
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "Login", fontSize = 30.sp, color = Color.White)
+                    Column(modifier = Modifier.fillMaxWidth().height(150.dp)) {
+
+                        Text(text = "Login",
+                            fontSize = 30.sp,
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
                         Text(text = "Email:", fontSize = 15.sp, color = Color.White)
                         OutlinedTextField(
                             value = email.value,
                             onValueChange = { email.value = it },
                             shape = RoundedCornerShape(33.dp),
                             singleLine = true,
-                            modifier = Modifier.height(55.dp),
+                            modifier = Modifier.height(35.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Email,
                                 imeAction = ImeAction.Next
@@ -104,7 +112,7 @@ fun Login(navegacao: NavHostController?) {
                             onValueChange = { senha.value = it },
                             shape = RoundedCornerShape(33.dp),
                             singleLine = true,
-                            modifier = Modifier.height(55.dp),
+                            modifier = Modifier.height(35.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Password,
                                 imeAction = ImeAction.Done
@@ -122,6 +130,45 @@ fun Login(navegacao: NavHostController?) {
                             .height(140.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+
+
+                        Button(
+                            onClick = {
+                                navegacao?.navigate("recuperar_senha")
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp),
+                            modifier = Modifier.height(35.dp),
+                            shape = RoundedCornerShape(0.dp)
+                        ) {
+                            Text(
+                                text = "Esqueci minha senha?",
+                                fontSize = 15.sp,
+                                color = Color.White
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(text = "Não possui uma conta?", fontSize = 15.sp, color = Color.White)
+                            Button(
+                                modifier = Modifier.height(35.dp),
+                                colors = ButtonDefaults.buttonColors(Color.Transparent),
+                                onClick = {
+                                    navegacao?.navigate("cadastro")
+                                }) {
+                                Text(text = "Cadastrar", fontSize = 15.sp, color = Color.White)
+                            }
+                        }
+
                         Button(
                             onClick = {
                                 if (email.value.isBlank() || senha.value.isBlank()) {
@@ -160,49 +207,14 @@ fun Login(navegacao: NavHostController?) {
 
 
                             },
+
                             shape = RoundedCornerShape(48.dp),
                             modifier = Modifier
                                 .width(200.dp)
                                 .height(40.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF037EF7))
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.White)
                         ) {
-                            Text(text = "Logar", fontSize = 15.sp, fontWeight = FontWeight.ExtraBold)
-                        }
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        Button(
-                            onClick = {
-                                navegacao?.navigate("recuperar_senha")
-                            },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp),
-                            modifier = Modifier.height(35.dp),
-                            shape = RoundedCornerShape(0.dp)
-                        ) {
-                            Text(
-                                text = "Esqueceu a senha?",
-                                fontSize = 15.sp,
-                                color = Color.White
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(text = "Não possui uma conta?", fontSize = 15.sp, color = Color.White)
-                            Button(
-                                modifier = Modifier.height(35.dp),
-                                colors = ButtonDefaults.buttonColors(Color.Transparent),
-                                onClick = {
-                                    navegacao?.navigate("cadastro")
-                                }) {
-                                Text(text = "Cadastre-se", fontSize = 15.sp, color = Color.White)
-                            }
+                            Text(text = "Login", fontSize = 15.sp, fontWeight = FontWeight.ExtraBold, color = Color(0xff341E9B))
                         }
                     }
                 }

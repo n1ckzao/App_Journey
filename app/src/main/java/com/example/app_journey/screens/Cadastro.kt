@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
@@ -95,11 +96,37 @@ fun Cadastro(navegacao: NavHostController) {
                         .padding(15.dp)
                 ) {
 
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Text("Nome:", fontSize = 15.sp)
+                    Text("Crie sua conta",
+                        fontSize = 35.sp,
+                        color = Color.White,
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        textAlign = TextAlign.Center
+                    )
+
+                    Row(
+                        modifier = Modifier
+                            .height(60.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Text("Já tem uma conta?", fontSize = 18.sp, color = Color.White)
+                        Button(
+                            modifier = Modifier.height(45.dp),
+                            colors = ButtonDefaults.buttonColors(Color.Transparent),
+                            onClick = { navegacao.navigate(route = "login") }
+                        ) {
+                            Text("Log in", fontSize = 18.sp, color = Color.White, fontWeight = FontWeight(1000))
+                        }
+                    }
+
+                    Column(modifier = Modifier.fillMaxWidth().height(350.dp), verticalArrangement = Arrangement.SpaceBetween) {
                         OutlinedTextField(
                             value = nome.value,
                             onValueChange = { nome.value = it },
+                            label = { Text(text = "Nome", color = Color.White) },
                             shape = RoundedCornerShape(33.dp),
                             singleLine = true,
                             modifier = Modifier.height(50.dp),
@@ -110,15 +137,14 @@ fun Cadastro(navegacao: NavHostController) {
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Data de nascimento:", fontSize = 15.sp)
                         OutlinedTextField(
                             value = dataNascimento.value,
                             onValueChange = { dataNascimento.value = it },
+                            label = { Text(text = "Sobrenome", color = Color.White) },
                             shape = RoundedCornerShape(33.dp),
                             singleLine = true,
                             modifier = Modifier
-                                .height(50.dp)
-                                .width(150.dp),
+                                .height(50.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Number,
                                 imeAction = ImeAction.Next
@@ -126,11 +152,11 @@ fun Cadastro(navegacao: NavHostController) {
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Email:", fontSize = 15.sp)
                         OutlinedTextField(
                             value = email.value,
                             onValueChange = { email.value = it },
                             shape = RoundedCornerShape(33.dp),
+                            label = { Text(text = "E-mail", color = Color.White) },
                             singleLine = true,
                             modifier = Modifier.height(50.dp),
                             keyboardOptions = KeyboardOptions(
@@ -140,11 +166,11 @@ fun Cadastro(navegacao: NavHostController) {
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Senha:", fontSize = 15.sp)
                         OutlinedTextField(
                             value = senha.value,
                             onValueChange = { senha.value = it },
                             shape = RoundedCornerShape(33.dp),
+                            label = { Text(text = "Senha", color = Color.White) },
                             singleLine = true,
                             modifier = Modifier.height(50.dp),
                             keyboardOptions = KeyboardOptions(
@@ -154,11 +180,11 @@ fun Cadastro(navegacao: NavHostController) {
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Confirmar Senha:", fontSize = 15.sp)
                         OutlinedTextField(
                             value = confirmarSenha.value,
                             onValueChange = { confirmarSenha.value = it },
                             shape = RoundedCornerShape(33.dp),
+                            label = { Text(text = "Confirmar senha", color = Color.White) },
                             singleLine = true,
                             modifier = Modifier.height(50.dp),
                             keyboardOptions = KeyboardOptions(
@@ -230,22 +256,6 @@ fun Cadastro(navegacao: NavHostController) {
 
 
                         Spacer(modifier = Modifier.height(10.dp))
-                        Row(
-                            modifier = Modifier
-                                .height(60.dp)
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text("Já tem uma conta?", fontSize = 15.sp)
-                            Button(
-                                modifier = Modifier.height(45.dp),
-                                colors = ButtonDefaults.buttonColors(Color.Transparent),
-                                onClick = { navegacao.navigate(route = "login") }
-                            ) {
-                                Text("Log in", fontSize = 15.sp, color = Color.White, fontWeight = FontWeight(1000))
-                            }
-                        }
                     }
                 }
             }
