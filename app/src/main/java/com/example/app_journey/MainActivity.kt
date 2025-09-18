@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
             val context = applicationContext
 
             val rotaInicial = if (SharedPrefHelper.obterEmail(context) != null) {
-                "perfil"
+                "login"
             } else {
                 "login"
             }
@@ -35,19 +35,6 @@ class MainActivity : ComponentActivity() {
                 composable(route = "login") { Login(navegacao) }
                 composable(route = "cadastro") { Cadastro(navegacao) }
                 composable(route = "recureracao_senha") { RecuperacaoSenha(navegacao) }
-
-                composable(route = "verificar_email/{email}") { backStackEntry ->
-                    val email = backStackEntry.arguments?.getString("email")
-                    if (email != null) {
-                        VerificarEmail(navegacao, email)
-                    }
-                }
-                composable(route = "redefinir_senha/{idUsuario}") { backStackEntry ->
-                    val idUsuario = backStackEntry.arguments?.getString("idUsuario")?.toIntOrNull()
-                    if (idUsuario != null) {
-                        RedefinirSenha(navegacao, idUsuario)
-                    }
-                }
 
             }
         }
