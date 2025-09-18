@@ -12,8 +12,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import android.widget.Toast
 import android.util.Log
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,7 +20,6 @@ import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -30,18 +27,44 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
-import com.example.app_journey.R
 import com.example.app_journey.model.Usuario
 import com.example.app_journey.service.RetrofitFactory
 
 @Composable
 fun Cadastro(navegacao: NavHostController) {
-    val nome = remember { mutableStateOf("") }
-    val sobrenome = remember { mutableStateOf("") }
+    val nome_completo = remember { mutableStateOf("") }
+    val dataNascimento = remember { mutableStateOf("") }
     val email = remember { mutableStateOf("") }
     val senha = remember { mutableStateOf("") }
     val confirmarSenha = remember { mutableStateOf("") }
     val context = LocalContext.current
+
+    fun formatarDataParaIso(data: String): String {
+        return try {
+            when {
+                data.contains("/") -> {
+                    // Entrada: "19/04/2008"
+                    val partes = data.split("/")
+                    val dia = partes[0]
+                    val mes = partes[1]
+                    val ano = partes[2]
+                    "$ano-$mes-$dia"
+                }
+
+                data.length == 8 -> {
+                    // Entrada: "19042008"
+                    val dia = data.substring(0, 2)
+                    val mes = data.substring(2, 4)
+                    val ano = data.substring(4, 8)
+                    "$ano-$mes-$dia"
+                }
+
+                else -> data // Retorna como está se o formato for desconhecido
+            }
+        } catch (e: Exception) {
+            data // Retorna original em caso de erro
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -97,12 +120,12 @@ fun Cadastro(navegacao: NavHostController) {
 
                     Column(modifier = Modifier.fillMaxWidth().height(350.dp), verticalArrangement = Arrangement.SpaceBetween) {
                         OutlinedTextField(
-                            value = nome.value,
-                            onValueChange = { nome.value = it },
+                            value = nome_completo.value,
+                            onValueChange = { nome_completo.value = it },
                             label = { Text(text = "Nome", color = Color.White) },
                             shape = RoundedCornerShape(33.dp),
                             singleLine = true,
-                            modifier = Modifier.height(50.dp),
+                            modifier = Modifier.height(55.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Next
@@ -111,13 +134,13 @@ fun Cadastro(navegacao: NavHostController) {
 
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedTextField(
-                            value = sobrenome.value,
-                            onValueChange = { sobrenome.value = it },
-                            label = { Text(text = "Sobrenome", color = Color.White) },
+                            value = dataNascimento.value,
+                            onValueChange = { dataNascimento.value = it },
+                            label = { Text(text = "Data de Nascimento", color = Color.White) },
                             shape = RoundedCornerShape(33.dp),
                             singleLine = true,
                             modifier = Modifier
-                                .height(50.dp),
+                                .height(55.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Number,
                                 imeAction = ImeAction.Next
@@ -131,7 +154,7 @@ fun Cadastro(navegacao: NavHostController) {
                             shape = RoundedCornerShape(33.dp),
                             label = { Text(text = "E-mail", color = Color.White) },
                             singleLine = true,
-                            modifier = Modifier.height(50.dp),
+                            modifier = Modifier.height(55.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Email,
                                 imeAction = ImeAction.Next
@@ -145,7 +168,7 @@ fun Cadastro(navegacao: NavHostController) {
                             shape = RoundedCornerShape(33.dp),
                             label = { Text(text = "Senha", color = Color.White) },
                             singleLine = true,
-                            modifier = Modifier.height(50.dp),
+                            modifier = Modifier.height(55.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Password,
                                 imeAction = ImeAction.Next
@@ -159,7 +182,7 @@ fun Cadastro(navegacao: NavHostController) {
                             shape = RoundedCornerShape(33.dp),
                             label = { Text(text = "Confirmar senha", color = Color.White) },
                             singleLine = true,
-                            modifier = Modifier.height(50.dp),
+                            modifier = Modifier.height(55.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Password,
                                 imeAction = ImeAction.Done
@@ -179,17 +202,19 @@ fun Cadastro(navegacao: NavHostController) {
                         Button(
                             onClick = {
                                 // Validação mínima
-                                if (nome.value.isBlank() || email.value.isBlank() || senha.value.isBlank()) {
+                                if (nome_completo.value.isBlank() || email.value.isBlank() || senha.value.isBlank()) {
                                     Toast.makeText(context, "Preencha todos os campos obrigatórios", Toast.LENGTH_SHORT).show()
                                     return@Button
                                 }
 
                                 val usuario = Usuario(
-                                    nome = nome.value,
-                                    sobrenome = sobrenome.value,
+                                    nome_completo = nome_completo.value,
+                                    data_nascimento = dataNascimento.value,
                                     email = email.value,
-                                    senha = senha.value
+                                    senha = senha.value,
+                                    tipo_usuario = "Estudante"
                                 )
+                                Log.d("#####", "#######  ${usuario}   ################################")
 
 
                                 val call = RetrofitFactory().getUsuarioService().inserirUsuario(usuario)

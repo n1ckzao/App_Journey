@@ -46,12 +46,11 @@ import retrofit2.Response
 
 @Composable
 fun CadastroProfissional(navegacao: NavHostController) {
-    val nome = remember { mutableStateOf("") }
-    val sobrenome = remember { mutableStateOf("") }
+    val nome_completo = remember { mutableStateOf("") }
+    val dataNascimento = remember { mutableStateOf("") }
     val email = remember { mutableStateOf("") }
     val senha = remember { mutableStateOf("") }
     val confirmarSenha = remember { mutableStateOf("") }
-    val linkedin_url = remember { mutableStateOf("") }
     val context = LocalContext.current
 
     Box(
@@ -109,8 +108,8 @@ fun CadastroProfissional(navegacao: NavHostController) {
 
                     Column(modifier = Modifier.fillMaxWidth().height(400.dp), verticalArrangement = Arrangement.SpaceBetween) {
                         OutlinedTextField(
-                            value = nome.value,
-                            onValueChange = { nome.value = it },
+                            value = nome_completo.value,
+                            onValueChange = { nome_completo.value = it },
                             label = { Text(text = "Nome", color = Color.White) },
                             shape = RoundedCornerShape(33.dp),
                             singleLine = true,
@@ -123,8 +122,8 @@ fun CadastroProfissional(navegacao: NavHostController) {
 
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedTextField(
-                            value = sobrenome.value,
-                            onValueChange = { sobrenome.value = it },
+                            value = dataNascimento.value,
+                            onValueChange = { dataNascimento.value = it },
                             label = { Text(text = "Sobrenome", color = Color.White) },
                             shape = RoundedCornerShape(33.dp),
                             singleLine = true,
@@ -178,18 +177,6 @@ fun CadastroProfissional(navegacao: NavHostController) {
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedTextField(
-                            value = linkedin_url.value,
-                            onValueChange = { linkedin_url.value = it },
-                            shape = RoundedCornerShape(33.dp),
-                            label = { Text(text = "linkedin URL", color = Color.White) },
-                            singleLine = true,
-                            modifier = Modifier.height(45.dp),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Password,
-                                imeAction = ImeAction.Done
-                            )
-                        )
 
                     }
 
@@ -203,17 +190,17 @@ fun CadastroProfissional(navegacao: NavHostController) {
                         Button(
                             onClick = {
                                 // Validação mínima
-                                if (nome.value.isBlank() || email.value.isBlank() || senha.value.isBlank()) {
+                                if (nome_completo.value.isBlank() || email.value.isBlank() || senha.value.isBlank()) {
                                     Toast.makeText(context, "Preencha todos os campos obrigatórios", Toast.LENGTH_SHORT).show()
                                     return@Button
                                 }
 
                                 val usuario = Usuario(
-                                    nome = nome.value,
-                                    sobrenome = sobrenome.value,
+                                    nome_completo = nome_completo.value,
+                                    data_nascimento = dataNascimento.value,
                                     email = email.value,
                                     senha = senha.value,
-                                    linkedin_url = linkedin_url.value
+                                    tipo_usuario = "Profissional"
                                 )
 
 
