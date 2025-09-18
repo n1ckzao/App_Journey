@@ -4,18 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.app_journey.screens.Cadastro
 import com.example.app_journey.screens.Login
-import com.example.app_journey.ui.theme.App_JourneyTheme
+import com.example.app_journey.screens.RecuperacaoSenha
+import com.example.app_journey.screens.RedefinirSenha
 import com.example.app_journey.utils.SharedPrefHelper
 
 class MainActivity : ComponentActivity() {
@@ -37,6 +32,8 @@ class MainActivity : ComponentActivity() {
                 startDestination = rotaInicial
             ) {
                 composable(route = "login") { Login(navegacao) }
+                composable(route = "cadastro") { Cadastro(navegacao) }
+                composable(route = "recureracao_senha") { RecuperacaoSenha(navegacao) }
 
             }
         }

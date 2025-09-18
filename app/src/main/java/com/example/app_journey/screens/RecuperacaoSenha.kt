@@ -69,7 +69,7 @@ fun RecuperacaoSenha(navegacao: NavHostController?) {
                         onClick = { navegacao?.navigate("login") },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
                         contentPadding = PaddingValues(0.dp),
-                        modifier = Modifier.width(150.dp).padding(top = 20.dp)
+                        modifier = Modifier.width(150.dp)
                     ) {
                         Image(
                             painter = painterResource(R.drawable.logo),

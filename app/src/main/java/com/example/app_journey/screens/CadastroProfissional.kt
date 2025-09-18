@@ -1,46 +1,57 @@
 package com.example.app_journey.screens
 
+import android.util.Log
+import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import android.widget.Toast
-import android.util.Log
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.app_journey.R
 import com.example.app_journey.model.Usuario
 import com.example.app_journey.service.RetrofitFactory
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
-fun Cadastro(navegacao: NavHostController) {
+fun CadastroProfissional(navegacao: NavHostController) {
     val nome = remember { mutableStateOf("") }
     val sobrenome = remember { mutableStateOf("") }
     val email = remember { mutableStateOf("") }
     val senha = remember { mutableStateOf("") }
     val confirmarSenha = remember { mutableStateOf("") }
+    val linkedin_url = remember { mutableStateOf("") }
     val context = LocalContext.current
 
     Box(
@@ -59,14 +70,15 @@ fun Cadastro(navegacao: NavHostController) {
         ) {
             Card(
                 modifier = Modifier
-                    .height(560.dp)
+                    .height(590.dp)
                     .fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = Color(0xff351D9B))
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(15.dp)
+                        .padding(15.dp),
+                    verticalArrangement = Arrangement.SpaceBetween
                 ) {
 
                     Text("Crie sua conta",
@@ -95,14 +107,14 @@ fun Cadastro(navegacao: NavHostController) {
                         }
                     }
 
-                    Column(modifier = Modifier.fillMaxWidth().height(350.dp), verticalArrangement = Arrangement.SpaceBetween) {
+                    Column(modifier = Modifier.fillMaxWidth().height(400.dp), verticalArrangement = Arrangement.SpaceBetween) {
                         OutlinedTextField(
                             value = nome.value,
                             onValueChange = { nome.value = it },
                             label = { Text(text = "Nome", color = Color.White) },
                             shape = RoundedCornerShape(33.dp),
                             singleLine = true,
-                            modifier = Modifier.height(50.dp),
+                            modifier = Modifier.height(45.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Next
@@ -116,8 +128,7 @@ fun Cadastro(navegacao: NavHostController) {
                             label = { Text(text = "Sobrenome", color = Color.White) },
                             shape = RoundedCornerShape(33.dp),
                             singleLine = true,
-                            modifier = Modifier
-                                .height(50.dp),
+                            modifier = Modifier.height(45.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Number,
                                 imeAction = ImeAction.Next
@@ -131,7 +142,7 @@ fun Cadastro(navegacao: NavHostController) {
                             shape = RoundedCornerShape(33.dp),
                             label = { Text(text = "E-mail", color = Color.White) },
                             singleLine = true,
-                            modifier = Modifier.height(50.dp),
+                            modifier = Modifier.height(45.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Email,
                                 imeAction = ImeAction.Next
@@ -145,7 +156,7 @@ fun Cadastro(navegacao: NavHostController) {
                             shape = RoundedCornerShape(33.dp),
                             label = { Text(text = "Senha", color = Color.White) },
                             singleLine = true,
-                            modifier = Modifier.height(50.dp),
+                            modifier = Modifier.height(45.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Password,
                                 imeAction = ImeAction.Next
@@ -159,7 +170,7 @@ fun Cadastro(navegacao: NavHostController) {
                             shape = RoundedCornerShape(33.dp),
                             label = { Text(text = "Confirmar senha", color = Color.White) },
                             singleLine = true,
-                            modifier = Modifier.height(50.dp),
+                            modifier = Modifier.height(45.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Password,
                                 imeAction = ImeAction.Done
@@ -167,15 +178,28 @@ fun Cadastro(navegacao: NavHostController) {
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = linkedin_url.value,
+                            onValueChange = { linkedin_url.value = it },
+                            shape = RoundedCornerShape(33.dp),
+                            label = { Text(text = "linkedin URL", color = Color.White) },
+                            singleLine = true,
+                            modifier = Modifier.height(45.dp),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Password,
+                                imeAction = ImeAction.Done
+                            )
+                        )
 
                     }
 
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(100.dp),
+                            .height(80.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        Spacer(modifier = Modifier .height(15.dp))
                         Button(
                             onClick = {
                                 // Validação mínima
@@ -188,7 +212,8 @@ fun Cadastro(navegacao: NavHostController) {
                                     nome = nome.value,
                                     sobrenome = sobrenome.value,
                                     email = email.value,
-                                    senha = senha.value
+                                    senha = senha.value,
+                                    linkedin_url = linkedin_url.value
                                 )
 
 
@@ -217,13 +242,13 @@ fun Cadastro(navegacao: NavHostController) {
                                     }
                                 })
                             },
+                            shape = RoundedCornerShape(48.dp),
                             modifier = Modifier
                                 .width(200.dp)
-                                .align(Alignment.CenterHorizontally),
-                            shape = RoundedCornerShape(48.dp),
-                            colors = ButtonDefaults.buttonColors(Color(0xFF008EFF))
+                                .height(40.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.White)
                         ) {
-                            Text("Cadastrar", fontSize = 15.sp, fontWeight = FontWeight.ExtraBold)
+                            Text(text = "Login", fontSize = 15.sp, fontWeight = FontWeight.ExtraBold, color = Color(0xff341E9B))
                         }
 
 
@@ -235,10 +260,9 @@ fun Cadastro(navegacao: NavHostController) {
     }
 }
 
-
 @Preview
 @Composable
-private fun CadastroPreview() {
-    val navController = rememberNavController()
-    Cadastro(navegacao = navController)
+private fun CadastroProfissionalPreview() {
+    val fakeNav = rememberNavController()
+    CadastroProfissional(navegacao = fakeNav)
 }

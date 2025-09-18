@@ -69,7 +69,7 @@ fun Login(navegacao: NavHostController?) {
                 modifier = Modifier
                     .height(560.dp)
                     .fillMaxWidth(),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xff351D9B))
+                colors = CardDefaults.cardColors(containerColor = Color(0xff351D9B))
             ){
                 Column (
                     modifier = Modifier
@@ -84,7 +84,7 @@ fun Login(navegacao: NavHostController?) {
                             .fillMaxWidth()
                             .height(100.dp)
                     )
-                    Column(modifier = Modifier.fillMaxWidth().height(150.dp)) {
+                    Column(modifier = Modifier.fillMaxWidth().height(200.dp)) {
 
                         Text(text = "Login",
                             fontSize = 30.sp,
@@ -93,26 +93,45 @@ fun Login(navegacao: NavHostController?) {
                             modifier = Modifier.fillMaxWidth()
                         )
 
-                        Text(text = "Email:", fontSize = 15.sp, color = Color.White)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(text = "Não possui uma conta?", fontSize = 15.sp, color = Color.White)
+                            Button(
+                                modifier = Modifier.height(35.dp),
+                                colors = ButtonDefaults.buttonColors(Color.Transparent),
+                                onClick = {
+                                    navegacao?.navigate("cadastro")
+                                }) {
+                                Text(text = "Cadastrar", fontSize = 15.sp, color = Color.White)
+                            }
+                        }
+
+
+                        Text(text = "Email:", fontSize = 13.sp, color = Color.White)
                         OutlinedTextField(
                             value = email.value,
                             onValueChange = { email.value = it },
                             shape = RoundedCornerShape(33.dp),
+                            label = { Text(text = "Nome", color = Color.White, fontSize = 15.sp) },
                             singleLine = true,
-                            modifier = Modifier.height(35.dp),
+                            modifier = Modifier.height(42.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Email,
                                 imeAction = ImeAction.Next
                             )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = "Senha:", fontSize = 15.sp, color = Color.White)
+                        Text(text = "Senha:", fontSize = 13.sp, color = Color.White)
                         OutlinedTextField(
                             value = senha.value,
                             onValueChange = { senha.value = it },
                             shape = RoundedCornerShape(33.dp),
+                            label = { Text(text = "Senha", color = Color.White, fontSize = 15.sp) },
                             singleLine = true,
-                            modifier = Modifier.height(35.dp),
+                            modifier = Modifier.height(42.dp),
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Password,
                                 imeAction = ImeAction.Done
@@ -130,11 +149,6 @@ fun Login(navegacao: NavHostController?) {
                             .height(140.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
-
-
                         Button(
                             onClick = {
                                 navegacao?.navigate("recuperar_senha")
@@ -158,16 +172,18 @@ fun Login(navegacao: NavHostController?) {
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(text = "Não possui uma conta?", fontSize = 15.sp, color = Color.White)
+                            Text(text = "Já é um proffissional?", fontSize = 14.sp, color = Color.White, modifier = Modifier)
                             Button(
                                 modifier = Modifier.height(35.dp),
                                 colors = ButtonDefaults.buttonColors(Color.Transparent),
                                 onClick = {
                                     navegacao?.navigate("cadastro")
                                 }) {
-                                Text(text = "Cadastrar", fontSize = 15.sp, color = Color.White)
+                                Text(text = "Criar conta profissional", fontSize = 14.sp, color = Color.White)
                             }
                         }
+
+                        Spacer(modifier = Modifier.height(10.dp))
 
                         Button(
                             onClick = {

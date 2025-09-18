@@ -29,7 +29,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @Composable
-fun RedefinirSenhaScreen(navegacao: NavHostController?, idUsuario: Int) {
+fun RedefinirSenha(navegacao: NavHostController?, idUsuario: Int) {
     var novaSenha by remember { mutableStateOf("") }
     var confirmarSenha by remember { mutableStateOf("") }
     val mensagem = remember { mutableStateOf<String?>(null) }
