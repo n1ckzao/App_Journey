@@ -135,7 +135,7 @@ fun RecuperacaoSenha(navegacao: NavHostController?) {
                                         loading.value = false
                                         if (response.isSuccessful) {
                                             val emailEncoded = Uri.encode(email.value.text)
-                                            navegacao?.navigate("verificar_codigo/$emailEncoded")
+                                            navegacao?.navigate("verificar_email/$emailEncoded")
                                         } else {
                                             Log.e("EmailErro", "Erro HTTP ${response.code()}")
                                             mensagem.value =

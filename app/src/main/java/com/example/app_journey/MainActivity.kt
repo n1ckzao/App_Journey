@@ -11,7 +11,6 @@ import com.example.app_journey.screens.Cadastro
 import com.example.app_journey.screens.Login
 import com.example.app_journey.screens.RecuperacaoSenha
 import com.example.app_journey.screens.RedefinirSenha
-import com.example.app_journey.screens.VerificarCodigo
 import com.example.app_journey.screens.VerificarEmail
 import com.example.app_journey.utils.SharedPrefHelper
 
@@ -37,7 +36,7 @@ class MainActivity : ComponentActivity() {
                 composable(route = "cadastro") { Cadastro(navegacao) }
                 composable(route = "recureracao_senha") { RecuperacaoSenha(navegacao) }
 
-                composable(route = "verificar_codigo/{email}") { backStackEntry ->
+                composable(route = "verificar_email/{email}") { backStackEntry ->
                     val email = backStackEntry.arguments?.getString("email")
                     if (email != null) {
                         VerificarEmail(navegacao, email)
