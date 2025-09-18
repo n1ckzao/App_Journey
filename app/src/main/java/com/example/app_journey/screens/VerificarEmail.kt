@@ -21,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @Composable
-fun VerificarCodigo(navegacao: NavHostController, email: String) {
+fun VerificarEmail(navegacao: NavHostController, email: String) {
     val codigo = remember { mutableStateOf("") }
     val mensagem = remember { mutableStateOf<String?>(null) }
     val loading = remember { mutableStateOf(false) }
@@ -109,9 +109,9 @@ fun VerificarCodigo(navegacao: NavHostController, email: String) {
 @Composable
 private fun VerificarCodigoPreview() {
     val fakeNav = rememberNavController()
-    VerificarCodigo(
+    VerificarEmail(
         navegacao = fakeNav,
         email = TODO()
     )
-    
+
 }
